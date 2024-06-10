@@ -6,7 +6,7 @@ services:
     ports:
       - '8888:8888'
     volumes:
-      - ./jupyter_notebook:/work
+      - jupyter_notebook:/home/jovyan/work
     environment:
       JUPYTER_ENABLE_LAB: 'yes'
     networks:
@@ -20,19 +20,20 @@ services:
     environment:
       MYSQL_DATABASE: 'test'              # name of database
       MYSQL_USER: 'sample'                # sample is the name of user
-      MYSQL_PASSWORD: 'password'          # password for sample user
-      MYSQL_ROOT_PASSWORD: ''     # password for root user
+      MYSQL_PASSWORD: 'root'          # password for sample user
+      MYSQL_ROOT_PASSWORD: 'root'     # password for root user
     ports:
       - '3306:3306'                       # host port 3306 is mapper to docker port 3306
     expose:
       - '3306'
     volumes:
       - ./db-dump:/docker-entrypoint-initdb.d
+      - mysql-db:/var/lib/mysql
     networks:
       - mynet      
 
 volumes:
-  db-dump:
-  jupyter_notebook:  
+  mysql-db:
+  jupyter_notebook:
 networks:
   mynet:
